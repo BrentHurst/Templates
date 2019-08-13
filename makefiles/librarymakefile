@@ -1,0 +1,42 @@
+# G BRENT HURST
+# Makefile template for libraries
+
+
+CC = g++
+LANGUAGE = cpp
+CFLAGS = -Wall -Wextra
+
+OBJDIR = obj
+HEADERDIR = .
+LIBDIR = .
+
+########## EDIT BELOW HERE ##########
+
+NAME = 
+
+########## EDIT ABOVE HERE ##########
+
+LIBFILENAME = $(LIBDIR)/lib$(NAME).a
+HEADERS = $(HEADERDIR)/$(NAME).h
+OBJECTS = $(patsubst %.$(LANGUAGE),$(OBJDIR)/%.o,$(wildcard *.$(LANGUAGE)))
+
+
+all: $(LIBFILENAME)
+
+$(LIBFILENAME): $(OBJECTS)
+	ar -vr $(LIBFILENAME) $(OBJECTS)
+
+$(OBJDIR)/%.o: %.$(LANGUAGE) $(HEADERS) | $(OBJDIR)
+	$(CC) $(CFLAGS) -c $*.$(LANGUAGE)
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+
+
+.PHONY: clean
+clean:
+	rm -f $(OBJECTS)
+
+.PHONY: cleanall
+cleanall:
+	rm -f $(OBJECTS) $(LIBFILENAME)
