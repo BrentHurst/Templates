@@ -2,13 +2,15 @@
 # Makefile template for libraries
 
 
-CC = g++
-LANGUAGE = cpp
-CFLAGS = -Wall -Wextra
 
 OBJDIR = obj
+SRCDIR = src
 HEADERDIR = .
 LIBDIR = .
+
+CC = g++
+LANGUAGE = cpp
+CFLAGS = -Wall -Wextra -I$(LIBDIR)
 
 ########## EDIT BELOW HERE ##########
 
@@ -18,7 +20,7 @@ NAME =
 
 LIBFILENAME = $(LIBDIR)/lib$(NAME).a
 HEADERS = $(HEADERDIR)/$(NAME).h
-OBJECTS = $(patsubst %.$(LANGUAGE),$(OBJDIR)/%.o,$(wildcard *.$(LANGUAGE)))
+OBJECTS = $(patsubst $(SRCDIR)/%.$(LANGUAGE),$(OBJDIR)/%.o,$(wildcard $(SRCDIR)/*.$(LANGUAGE)))
 
 
 all: $(LIBFILENAME)
@@ -26,8 +28,8 @@ all: $(LIBFILENAME)
 $(LIBFILENAME): $(OBJECTS)
 	ar -vr $(LIBFILENAME) $(OBJECTS)
 
-$(OBJDIR)/%.o: %.$(LANGUAGE) $(HEADERS) | $(OBJDIR)
-	$(CC) $(CFLAGS) -c $*.$(LANGUAGE)
+$(OBJDIR)/%.o: $(SRCDIR)/%.$(LANGUAGE) $(HEADERS) | $(OBJDIR)
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
