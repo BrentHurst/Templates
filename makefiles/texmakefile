@@ -1,0 +1,13 @@
+TITLE = 
+EDITING = $(TITLE).tex
+PDF = $(TITLE).pdf
+
+
+all: $(PDF)
+
+$(PDF): $(EDITING)
+	pdfl $(EDITING)
+
+.PHONY: clean
+clean:
+	rm -f $(PDF)

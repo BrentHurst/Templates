@@ -1,0 +1,18 @@
+TITLE = 
+EDITING = $(TITLE).tex
+INTERMEDIATE = $(TITLE).formatted.tex
+PDF = $(TITLE).formatted.pdf
+BIBLETEXTSUBSTITUTOR = /home/brent/gitRepos/getBible.git/BibleTextSubstitutor.py
+
+
+all: $(PDF)
+
+$(PDF): $(INTERMEDIATE)
+	pdfl $(INTERMEDIATE)
+
+$(INTERMEDIATE): $(EDITING) $(BIBLETEXTSUBSTITUTOR)
+	$(BIBLETEXTSUBSTITUTOR) $(EDITING) tex
+
+.PHONY: clean
+clean:
+	rm -f $(PDF)
